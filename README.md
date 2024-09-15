@@ -1,25 +1,80 @@
-# @waline/vercel
+# WalineService
 
-![Version](https://img.shields.io/npm/v/@waline/vercel?color=blue&logo=npm&style=flat-square)
+## 概述：
 
-This is the backend for Waline comment system.
+> 本项目用作 Waline 独立部署，帮助你自动初始化数据库，一键实现可监控式后台运行。
+> 在部署[waline-service](https://github.com/loclink/waline-service)前你需要准备好已安装数据库的服务器或云数据库（并在服务器中执行以下操作，该项目支持所有 waline 所支持的数据库，参考：[多数据库服务支持](https://waline.js.org/guide/server/databases.html)。但`npm run init:db`命令当前仅支持 `mysql`
 
-## Installation
+### 拉取仓库：
 
+```sh
+git clone https://github.com/loclink/waline-service.git
 ```
-npm install @waline/vercel --save
+
+### 安装依赖：
+
+```sh
+cd waline-service
+npm install
 ```
 
-## Configuration
+### 初始化`.env`文件：
 
-You should set `LEAN_ID` and `LEAN_KEY` in environment variable which can get from <https://leancloud.app>.
+默认情况下，你`clone`下来的仓库是没有`.env`文件的，你可以手动在根目录中创建，并修改为自己的配置：
 
-The detail how to get `LEAN_ID` and `LEAN_KEY`: <https://waline.js.org/get-started.html>
+```env
+MYSQL_HOST=127.0.0.1 # 数据库连接地址
+MYSQL_PORT=3306 # 数据库连接端口号
+MYSQL_DB=waline # 数据库名
+MYSQL_USER=root # 连接数据库用户名
+MYSQL_PASSWORD=tj991118 # 连接密码
+SITE_NAME=example # 网站名称，用于在消息中显示。
+SITE_URL=https://example.com # 网站地址，用于在消息中显示
+```
 
-We support [Akismet](https://akismet.com/) spam protection service default. If you want close it, please set `AKISMET_KEY` environment variable as `false`。
+如果你嫌麻烦，还可以直接通过执行命令的方式创建`.env`文件，然后再进行修改：
 
-## Deploy
+```sh
+npm run init:env
+```
 
-[![Deploy button](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/walinejs/waline/tree/main/example)
+### 初始化数据库：
 
-Click it to deploy quickly!
+当你配置好一切之后，你可以直接通过命令的形式，自动创建名称于`MYSQL_DB`相同的数据库，并在此数据库中自动为你创建`Waline`所需要的数据表：   
+**该命令当前只支持 mysql，这意味着：如果你使用的是其他类型的数据库，需要自己手动创建数据库和数据表。**
+```sh
+npm run init:db
+```
+
+![image](https://tvax1.sinaimg.cn/large/0087ufIQgy1h5idir4pkoj30kv07atbt.jpg)
+
+![image](https://tvax2.sinaimg.cn/large/0087ufIQgy1h5idl5sygaj306u03fq3d.jpg)
+
+### 启动项目：
+
+```sh
+npm run start
+```
+
+![image](https://tva4.sinaimg.cn/large/0087ufIQgy1h5idn0aqy4j315z08k0yx.jpg)
+
+### 其他操作命令：
+
+```sh
+npm run dev # 开发时前台启动服务并保持代码热更新
+npm run stop # 停止运行
+npm run log # 查看日志
+npm run status # 查看运行状态
+```
+
+### 服务反向代理：
+
+请查阅：https://waline.js.org/guide/server/vps-deploy.html
+
+### 关于：
+
+如果你觉得还不错的话，请留下一个 star 吧~
+
+主要依赖：[waline](https://github.com/walinejs/waline)
+
+更多`waline`配置请查阅：https://waline.js.org/
