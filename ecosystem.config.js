@@ -4,6 +4,7 @@ module.exports = {
       name: 'waline-service', // 项目名称
       script: './src/main.js', // 执行入口
       cwd: './', // 工作路径
+      instances: 'max',
       watch: true, // 是否开启监听
       ignore_watch: ['logs', '.git', 'node_modules'], // 监听器忽略文件目录
       out_file: './logs/waline_info.log', // 日志输出路径
